@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">搞个大新闻</string>
+    <string name="no_network_connected">没有网络</string>
+    <string name="go_to_set">去设置</string>
+</resources>
