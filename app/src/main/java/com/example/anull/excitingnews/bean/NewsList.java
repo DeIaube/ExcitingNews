@@ -1,5 +1,8 @@
 package com.example.anull.excitingnews.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -41,7 +44,8 @@ public class NewsList {
         this.stories = stories;
     }
 
-    public static class StoriesBean {
+    public static class StoriesBean implements Parcelable {
+
         private String title;
         private int id;
         private List<String> images;
@@ -69,5 +73,38 @@ public class NewsList {
         public void setImages(List<String> images) {
             this.images = images;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.title);
+            dest.writeInt(this.id);
+            dest.writeStringList(this.images);
+        }
+
+        public StoriesBean() {
+        }
+
+        protected StoriesBean(Parcel in) {
+            this.title = in.readString();
+            this.id = in.readInt();
+            this.images = in.createStringArrayList();
+        }
+
+        public static final Parcelable.Creator<StoriesBean> CREATOR = new Parcelable.Creator<StoriesBean>() {
+            @Override
+            public StoriesBean createFromParcel(Parcel source) {
+                return new StoriesBean(source);
+            }
+
+            @Override
+            public StoriesBean[] newArray(int size) {
+                return new StoriesBean[size];
+            }
+        };
     }
 }

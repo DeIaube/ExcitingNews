@@ -29,13 +29,44 @@
         android:layout_gravity="bottom"
         android:background="#ffffff"
         android:gravity="center"
+        android:orientation="horizontal"
         app:layout_behavior="com.example.anull.excitingnews.behavior.MyBottomBarBehavior">
+        <TextView
+            android:textColor="@android:color/darker_gray"
+            android:id="@+id/home"
+            android:text="@string/home"
+            android:textSize="16sp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="match_parent" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="#000000"
-            android:text="这是一个底栏"/>
+            android:textColor="@android:color/darker_gray"
+            android:id="@+id/collection"
+            android:text="@string/collection"
+            android:textSize="16sp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="match_parent" />
+        <TextView
+            android:textColor="@android:color/darker_gray"
+            android:id="@+id/setting"
+            android:text="@string/setting"
+            android:textSize="16sp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="match_parent" />
+        <TextView
+            android:textColor="@android:color/darker_gray"
+            android:id="@+id/more"
+            android:text="@string/more"
+            android:textSize="16sp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="match_parent" />
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

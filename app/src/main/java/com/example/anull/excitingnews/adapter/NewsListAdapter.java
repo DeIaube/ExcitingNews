@@ -25,11 +25,18 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
     private Context context;
     private LayoutInflater inflater;
     private List<NewsList.StoriesBean> newsList;
+    private OnItemClickListener onItemClickListener;
+
+
 
     public NewsListAdapter(Context context, List<NewsList.StoriesBean> newsList) {
         this.context = context;
         this.newsList = newsList;
         this.inflater = LayoutInflater.from(context);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -46,6 +53,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
             Picasso.with(context).load(newsItem.getImages().get(0)).into(holder.newsImg);
         }
         holder.newsTitle.setText(newsItem.getTitle());
+        holder.position = position;
     }
 
     public void refresh(List<NewsList.StoriesBean> newsList){
@@ -63,15 +71,28 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
         return newsList.size();
     }
 
-    static class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder{
 
         @InjectView(R.id.newsImg)
         CircleImageView newsImg;
         @InjectView(R.id.newsTitle)
         TextView newsTitle;
+        int position;
         public MyViewHolder(View itemView) {
             super(itemView);
             ButterKnife.inject(this, itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(onItemClickListener != null){
+                        onItemClickListener.click(v, newsList.get(position));
+                    }
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener{
+        void click(View v, NewsList.StoriesBean item);
     }
 }

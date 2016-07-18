@@ -9,4 +9,5 @@ public class Config {
     public static final String LATEST_URL = "api/4/news/latest";
     public static final String DETAIL_URL = "api/4/news/{id}";
     public static final String BEFORE_URL = "api/4/news/before/{data}";
+    public static String ID = "";
 }

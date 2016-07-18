@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.anull.excitingnews.R;
+import com.example.anull.excitingnews.read.ReadActivity;
 import com.example.anull.excitingnews.adapter.NewsListAdapter;
 import com.example.anull.excitingnews.base.BaseFragment;
 import com.example.anull.excitingnews.bean.NewsList;
@@ -22,7 +23,7 @@ import butterknife.InjectView;
 /**
  * Created by null on 2016/7/18.
  */
-public class HomeFragment extends BaseFragment implements HomeContract.View, SwipeRefreshLayout.OnRefreshListener{
+public class HomeFragment extends BaseFragment implements HomeContract.View, SwipeRefreshLayout.OnRefreshListener, NewsListAdapter.OnItemClickListener {
 
     @InjectView(R.id.newsList)
     RecyclerView newsList;
@@ -39,9 +40,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Swi
         refreshLayout.setColorSchemeResources( R.color.colorPrimary, android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
         refreshLayout.setOnRefreshListener(this);
         adapter = new NewsListAdapter(getContext(), new ArrayList<NewsList.StoriesBean>());
+        adapter.setOnItemClickListener(this);
         newsList.setAdapter(adapter);
-        presenter = new HomePresenter(this);
-        presenter.start();
         newsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -57,6 +57,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Swi
                 lastItemIndex = ((LinearLayoutManager)recyclerView.getLayoutManager()).findLastVisibleItemPosition();
             }
         });
+
+        presenter = new HomePresenter(this);
+        presenter.start();
     }
 
     @Override
@@ -68,8 +71,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Swi
     public void showProgressBar() {
         if(progressDialog == null){
             progressDialog = new ProgressDialog(getContext());
-            progressDialog.setTitle("加载中");
-            progressDialog.setMessage("请稍后......");
+            progressDialog.setTitle(getString(R.string.loading));
+            progressDialog.setMessage(getString(R.string.please_wait));
             progressDialog.setCancelable(false);
         }
         progressDialog.show();
@@ -108,5 +111,12 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Swi
     @Override
     public void onRefresh() {
         presenter.refresh();
+    }
+
+    @Override
+    public void click(View v, NewsList.StoriesBean item) {
+        Intent intent = new Intent(getContext(), ReadActivity.class);
+        intent.putExtra("NewsItem", item);
+        startActivity(intent);
     }
 }
