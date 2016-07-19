@@ -1,8 +1,10 @@
-package com.example.anull.excitingnews.read;
+package com.example.anull.excitingnews.ui.read;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.provider.Settings;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -21,12 +23,13 @@ import com.example.anull.excitingnews.util.HtmlUtil;
 import com.example.anull.excitingnews.util.StatusBarUtil;
 import com.squareup.picasso.Picasso;
 
+import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 /**
  * Created by null on 2016/7/18.
  */
-public class ReadActivity extends BaseActivity implements ReadContract.View{
+public class ReadActivity extends BaseActivity implements ReadContract.View {
     @InjectView(R.id.headImg)
     ImageView ivHead;
     @InjectView(R.id.tvCopyRight)
@@ -35,12 +38,15 @@ public class ReadActivity extends BaseActivity implements ReadContract.View{
     Toolbar toolbar;
     @InjectView(R.id.wbRead)
     WebView wbRead;
+    @InjectView(R.id.collection)
+    FloatingActionButton collection;
 
     ProgressDialog progressDialog;
 
     NewsList.StoriesBean newsItem;
 
     ReadContract.Presenter presenter;
+
 
     @Override
     protected void init() {
@@ -79,6 +85,12 @@ public class ReadActivity extends BaseActivity implements ReadContract.View{
                 return true;
             }
         });
+        collection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.collect(newsItem);
+            }
+        });
     }
 
     @Override
@@ -88,7 +100,7 @@ public class ReadActivity extends BaseActivity implements ReadContract.View{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 break;
@@ -98,7 +110,7 @@ public class ReadActivity extends BaseActivity implements ReadContract.View{
 
     @Override
     public void showProgressBar() {
-        if(progressDialog == null){
+        if (progressDialog == null) {
             progressDialog = new ProgressDialog(this);
             progressDialog.setTitle(getString(R.string.loading));
             progressDialog.setMessage(getString(R.string.please_wait));
@@ -109,7 +121,7 @@ public class ReadActivity extends BaseActivity implements ReadContract.View{
 
     @Override
     public void hideProgressBar() {
-        if(progressDialog != null){
+        if (progressDialog != null) {
             progressDialog.dismiss();
         }
     }
@@ -131,5 +143,22 @@ public class ReadActivity extends BaseActivity implements ReadContract.View{
         tvCopyRight.setText(newsDetail.getImage_source());
         String content = HtmlUtil.createHtmlData(newsDetail.getBody(), HtmlUtil.createCssTag(newsDetail.getCss()), HtmlUtil.createJsTag(newsDetail.getJs()));
         wbRead.loadDataWithBaseURL("file:///android_asset/", content, "text/html", "utf-8", null);
+    }
+
+    @Override
+    public void showCollectSuccess() {
+        toast("收藏成功");
+    }
+
+    @Override
+    public void showCollectFaile() {
+        toast("收藏失败，已在收藏列表");
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.inject(this);
     }
 }

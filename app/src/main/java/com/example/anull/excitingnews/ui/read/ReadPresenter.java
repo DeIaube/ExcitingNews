@@ -1,7 +1,9 @@
-package com.example.anull.excitingnews.read;
+package com.example.anull.excitingnews.ui.read;
 
 import com.example.anull.excitingnews.bean.NewsDetail;
+import com.example.anull.excitingnews.bean.NewsList;
 import com.example.anull.excitingnews.network.ZhiHuRequest;
+import com.example.anull.excitingnews.util.CollectNewsHolder;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -14,6 +16,15 @@ public class ReadPresenter extends ReadContract.Presenter {
 
     public ReadPresenter(ReadContract.View view) {
         super(view);
+    }
+
+    @Override
+    void collect(NewsList.StoriesBean newsItem) {
+        if(CollectNewsHolder.getSingle().add(newsItem)){
+            view.showCollectSuccess();
+        }else{
+            view.showCollectFaile();
+        }
     }
 
     @Override

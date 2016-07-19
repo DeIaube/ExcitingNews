@@ -1,4 +1,4 @@
-package com.example.anull.excitingnews.home;
+package com.example.anull.excitingnews.ui.home;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.anull.excitingnews.R;
-import com.example.anull.excitingnews.read.ReadActivity;
 import com.example.anull.excitingnews.adapter.NewsListAdapter;
 import com.example.anull.excitingnews.base.BaseFragment;
 import com.example.anull.excitingnews.bean.NewsList;
@@ -115,8 +114,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Swi
 
     @Override
     public void click(View v, NewsList.StoriesBean item) {
-        Intent intent = new Intent(getContext(), ReadActivity.class);
-        intent.putExtra("NewsItem", item);
-        startActivity(intent);
+        presenter.showNewsDetail(getContext(), item);
     }
 }

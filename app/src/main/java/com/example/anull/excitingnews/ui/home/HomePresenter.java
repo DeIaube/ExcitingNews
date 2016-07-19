@@ -1,7 +1,11 @@
-package com.example.anull.excitingnews.home;
+package com.example.anull.excitingnews.ui.home;
+
+import android.content.Context;
+import android.content.Intent;
 
 import com.example.anull.excitingnews.bean.NewsList;
 import com.example.anull.excitingnews.network.ZhiHuRequest;
+import com.example.anull.excitingnews.ui.read.ReadActivity;
 import com.example.anull.excitingnews.util.DataUtil;
 
 import java.util.List;
@@ -78,9 +82,12 @@ public class HomePresenter extends HomeContract.Presenter {
     }
 
     @Override
-    void showNewsDetail(NewsList.StoriesBean newsItem) {
-
+    void showNewsDetail(Context context, NewsList.StoriesBean newsItem) {
+        Intent intent = new Intent(context, ReadActivity.class);
+        intent.putExtra("NewsItem", newsItem);
+        context.startActivity(intent);
     }
+
 
     @Override
     public void start() {

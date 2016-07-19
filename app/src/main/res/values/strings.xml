@@ -8,4 +8,6 @@
     <string name="collection">收藏</string>
     <string name="setting">设置</string>
     <string name="more">更多</string>
+    <string name="delete_sure">确定要删除么</string>
+    <string name="revocation">撤销</string>
 </resources>

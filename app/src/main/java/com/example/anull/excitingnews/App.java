@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 
+import com.avos.avoscloud.AVOSCloud;
 import com.example.anull.excitingnews.config.Config;
 
 /**
@@ -17,6 +18,7 @@ public class App extends Application {
         appContext = this;
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         Config.ID = telephonyManager.getDeviceId();
+        AVOSCloud.initialize(this, Config.CLOUD_ID, Config.CLOUD_KEY);
     }
 
     public static Context getAppContext() {

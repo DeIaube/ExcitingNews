@@ -2,9 +2,11 @@ package com.example.anull.excitingnews.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.example.anull.excitingnews.R;
@@ -26,6 +28,8 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
     private LayoutInflater inflater;
     private List<NewsList.StoriesBean> newsList;
     private OnItemClickListener onItemClickListener;
+
+    int lastPosition = -1;
 
 
 
@@ -54,6 +58,16 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
         }
         holder.newsTitle.setText(newsItem.getTitle());
         holder.position = position;
+        startAnimator(holder.viewItem, position);
+        Log.i("fuck", "刷新" + position);
+    }
+
+    //第一次出现时加载动画
+    private void startAnimator(View viewItem, int position) {
+        if(position > lastPosition){
+            viewItem.startAnimation(AnimationUtils.loadAnimation(context, R.anim.item_button_in));
+            lastPosition = position;
+        }
     }
 
     public void refresh(List<NewsList.StoriesBean> newsList){
@@ -77,6 +91,8 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
         CircleImageView newsImg;
         @InjectView(R.id.newsTitle)
         TextView newsTitle;
+        @InjectView(R.id.view_item)
+        View viewItem;
         int position;
         public MyViewHolder(View itemView) {
             super(itemView);

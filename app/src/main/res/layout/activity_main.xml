@@ -30,7 +30,7 @@
         android:background="#ffffff"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_behavior="com.example.anull.excitingnews.behavior.MyBottomBarBehavior">
+        app:layout_behavior="com.example.anull.excitingnews.ui.behavior.MyBottomBarBehavior">
         <TextView
             android:textColor="@android:color/darker_gray"
             android:id="@+id/home"

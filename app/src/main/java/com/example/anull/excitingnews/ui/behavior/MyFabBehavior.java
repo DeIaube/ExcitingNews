@@ -1,4 +1,4 @@
-package com.example.anull.excitingnews.behavior;
+package com.example.anull.excitingnews.ui.behavior;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
