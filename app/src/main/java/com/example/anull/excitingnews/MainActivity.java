@@ -12,6 +12,7 @@ import com.example.anull.excitingnews.base.BaseActivity;
 import com.example.anull.excitingnews.config.Config;
 import com.example.anull.excitingnews.ui.collect.CollectFragment;
 import com.example.anull.excitingnews.ui.home.HomeFragment;
+import com.example.anull.excitingnews.ui.more.MoreFragment;
 import com.example.anull.excitingnews.ui.setting.SettingFragment;
 import com.example.anull.excitingnews.util.CollectNewsHolder;
 import com.google.gson.Gson;
@@ -41,6 +42,7 @@ public class MainActivity extends BaseActivity {
     HomeFragment homeFragment;
     CollectFragment collectFragment;
     SettingFragment settingFragment;
+    MoreFragment moreFragment;
 
 
     @Override
@@ -53,6 +55,8 @@ public class MainActivity extends BaseActivity {
         homeFragment = new HomeFragment();
         collectFragment = new CollectFragment();
         settingFragment = new SettingFragment();
+        moreFragment = new MoreFragment();
+
         getSupportFragmentManager().beginTransaction().add(R.id.mainContent, homeFragment).commit();
         home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +92,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 initTextColor();
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainContent, moreFragment).commit();
                 getSupportActionBar().setTitle(getString(R.string.more));
                 more.setTextColor(selectColor);
             }

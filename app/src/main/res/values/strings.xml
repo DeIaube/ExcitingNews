@@ -10,4 +10,7 @@
     <string name="more">更多</string>
     <string name="delete_sure">确定要删除么</string>
     <string name="revocation">撤销</string>
+    <string name="author">天亮了</string>
+    <string name="api_sourse">Api来源:https://github.com/izzyleung</string>
+    <string name="author_github">github：https://github.com/DeIaube</string>
 </resources>
