@@ -91,7 +91,7 @@ public class CollectFragment extends BaseFragment implements CollectContract.Vie
 
     @Override
     protected int getLayout() {
-        return R.layout.fragment_home;
+        return R.layout.fragment_collect;
     }
 
     @Override
