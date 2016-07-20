@@ -6,6 +6,7 @@ import android.telephony.TelephonyManager;
 
 import com.avos.avoscloud.AVOSCloud;
 import com.example.anull.excitingnews.config.Config;
+import com.example.anull.excitingnews.util.SpUtil;
 
 /**
  * Created by null on 2016/7/18.
@@ -19,6 +20,7 @@ public class App extends Application {
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         Config.ID = telephonyManager.getDeviceId();
         AVOSCloud.initialize(this, Config.CLOUD_ID, Config.CLOUD_KEY);
+        SpUtil.init(this);
     }
 
     public static Context getAppContext() {

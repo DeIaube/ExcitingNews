@@ -12,6 +12,7 @@ import com.example.anull.excitingnews.base.BaseActivity;
 import com.example.anull.excitingnews.config.Config;
 import com.example.anull.excitingnews.ui.collect.CollectFragment;
 import com.example.anull.excitingnews.ui.home.HomeFragment;
+import com.example.anull.excitingnews.ui.setting.SettingFragment;
 import com.example.anull.excitingnews.util.CollectNewsHolder;
 import com.google.gson.Gson;
 
@@ -33,33 +34,71 @@ public class MainActivity extends BaseActivity {
     @InjectView(R.id.more)
     TextView more;
 
+    TextView[] textViews;
+
+    int selectColor;
+
     HomeFragment homeFragment;
     CollectFragment collectFragment;
+    SettingFragment settingFragment;
 
 
     @Override
     protected void init() {
         setSupportActionBar(toolbar);
         initCollectData();
+        textViews = new TextView[]{home, collection, setting, more};
+        selectColor = getResources().getColor(R.color.colorAccent);
 
         homeFragment = new HomeFragment();
         collectFragment = new CollectFragment();
+        settingFragment = new SettingFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.mainContent, homeFragment).commit();
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                initTextColor();
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainContent,homeFragment).commit();
-                getSupportActionBar().setTitle("首页");
+                getSupportActionBar().setTitle(R.string.home);
+                home.setTextColor(selectColor);
             }
         });
 
         collection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                initTextColor();
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainContent, collectFragment).commit();
-                getSupportActionBar().setTitle("收藏");
+                getSupportActionBar().setTitle(R.string.collection);
+                collection.setTextColor(selectColor);
             }
         });
+
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initTextColor();
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainContent, settingFragment).commit();
+                getSupportActionBar().setTitle(getString(R.string.setting));
+                setting.setTextColor(selectColor);
+            }
+        });
+
+        more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initTextColor();
+                getSupportActionBar().setTitle(getString(R.string.more));
+                more.setTextColor(selectColor);
+            }
+        });
+    }
+
+    private void initTextColor() {
+        int defaultColor = getResources().getColor(android.R.color.darker_gray);
+        for (TextView textView : textViews) {
+            textView.setTextColor(defaultColor);
+        }
     }
 
     private void initCollectData() {
@@ -81,11 +120,10 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onBackPressed() {
+        super.onBackPressed();
         saveCollectData();
     }
-
 
     private void saveCollectData() {
         String data = new Gson().toJson(CollectNewsHolder.getSingle().getNewsCollect());
@@ -102,12 +140,10 @@ public class MainActivity extends BaseActivity {
             object.saveInBackground();
         }
 
-
     }
 
     @Override
     protected int getLayout() {
         return R.layout.activity_main;
     }
-
 }

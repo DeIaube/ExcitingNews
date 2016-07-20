@@ -2,7 +2,6 @@ package com.example.anull.excitingnews.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +58,6 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
         holder.newsTitle.setText(newsItem.getTitle());
         holder.position = position;
         startAnimator(holder.viewItem, position);
-        Log.i("fuck", "刷新" + position);
     }
 
     //第一次出现时加载动画

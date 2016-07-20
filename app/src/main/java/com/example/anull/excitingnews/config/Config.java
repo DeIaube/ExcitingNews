@@ -15,4 +15,6 @@ public class Config {
 
     public static String ID = "";
 
+    public static String NO_IMG_MODE = "noImgMode";
+
 }

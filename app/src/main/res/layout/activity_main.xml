@@ -32,7 +32,7 @@
         android:orientation="horizontal"
         app:layout_behavior="com.example.anull.excitingnews.ui.behavior.MyBottomBarBehavior">
         <TextView
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@color/colorAccent"
             android:id="@+id/home"
             android:text="@string/home"
             android:textSize="16sp"

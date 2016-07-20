@@ -19,7 +19,9 @@ import com.example.anull.excitingnews.R;
 import com.example.anull.excitingnews.base.BaseActivity;
 import com.example.anull.excitingnews.bean.NewsDetail;
 import com.example.anull.excitingnews.bean.NewsList;
+import com.example.anull.excitingnews.config.Config;
 import com.example.anull.excitingnews.util.HtmlUtil;
+import com.example.anull.excitingnews.util.SpUtil;
 import com.example.anull.excitingnews.util.StatusBarUtil;
 import com.squareup.picasso.Picasso;
 
@@ -78,6 +80,7 @@ public class ReadActivity extends BaseActivity implements ReadContract.View {
         settings.setAppCachePath(getCacheDir().getAbsolutePath() + "/webViewCache");
         settings.setAppCacheEnabled(true);
         settings.setLoadWithOverviewMode(true);
+        settings.setBlockNetworkImage(SpUtil.getBoolen(Config.NO_IMG_MODE, false));
         wbRead.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
