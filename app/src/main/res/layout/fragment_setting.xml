@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <Switch
+        android:layout_marginTop="?attr/actionBarSize"
         android:id="@+id/noImgMode"
         android:text="无图模式"
         android:layout_width="match_parent"
