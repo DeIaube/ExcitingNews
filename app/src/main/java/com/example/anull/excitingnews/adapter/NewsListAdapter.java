@@ -14,8 +14,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -43,12 +41,28 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if(position == 0){
+            return 0;
+        }
+        return 1;
+    }
+
+    @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MyViewHolder(inflater.inflate(R.layout.news_item, parent, false));
+        if(viewType == 0){
+            return new MyViewHolder(inflater.inflate(R.layout.empty_item, parent, false), 0);
+        }
+        return new MyViewHolder(inflater.inflate(R.layout.news_item, parent, false), 1);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        if(position == 0){
+            return;
+        }else{
+            position = position - 1;
+        }
         NewsList.StoriesBean newsItem = newsList.get(position);
         if(newsItem.getImages().isEmpty()){
             Picasso.with(context).load(R.drawable.error).into(holder.newsImg);
@@ -80,21 +94,23 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
 
     @Override
     public int getItemCount() {
-        return newsList.size();
+        return newsList.size() + 1;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder{
 
-        @InjectView(R.id.newsImg)
         CircleImageView newsImg;
-        @InjectView(R.id.newsTitle)
         TextView newsTitle;
-        @InjectView(R.id.view_item)
         View viewItem;
         int position;
-        public MyViewHolder(View itemView) {
+        public MyViewHolder(View itemView, int type) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            if(type == 0){
+                return;
+            }
+            newsImg = (CircleImageView) itemView.findViewById(R.id.newsImg);
+            newsTitle = (TextView) itemView.findViewById(R.id.newsTitle);
+            viewItem = itemView.findViewById(R.id.view_item);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -103,6 +119,13 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
                     }
                 }
             });
+        }
+    }
+
+    class EmptyHolder extends RecyclerView.ViewHolder{
+
+        public EmptyHolder(View itemView) {
+            super(itemView);
         }
     }
 

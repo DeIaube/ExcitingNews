@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 
 import com.example.anull.excitingnews.R;
 import com.example.anull.excitingnews.adapter.NewsListAdapter;
@@ -40,6 +41,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Swi
     @InjectView(R.id.toTop)
     FloatingActionButton toTop;
 
+    boolean isUp = false;
+    boolean isDown = false;
+
     @Override
     protected void init() {
         newsList.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -61,6 +65,15 @@ public class HomeFragment extends BaseFragment implements HomeContract.View, Swi
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 lastItemIndex = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+                if(dy > 0 && !isUp){
+                    toTop.animate().translationY(toTop.getHeight() + 300).setInterpolator(new LinearInterpolator()).start();
+                    isUp = true;
+                    isDown = false;
+                }else if (dy < 0 && !isDown){
+                    toTop.animate().translationY(0).setInterpolator(new LinearInterpolator()).start();
+                    isUp = false;
+                    isDown = true;
+                }
             }
         });
 
